@@ -25,7 +25,11 @@ const Pokedex = () => {
         e.preventDefault();
         // let temp = [startInd, endInd]
         // setPind([...temp])
-        getPokedex(startInd, endInd);
+        if(startInd <= endInd) {
+            getPokedex(startInd, endInd);
+        } else {
+            alert('The starting index must be less than or equal to the ending index.');
+        }
     }
 
     useEffect(() => {
@@ -35,27 +39,26 @@ const Pokedex = () => {
     return (
         <div className='row bg-dark'>
             <div className='col-12 mb-3'>
-                <form className='mt-3 text-light' onSubmit={(e) => {
-                    handleSubmit(e);
-                }}>
-                    <div className='row'>
-                        <div className='col-5 d-flex'>
-                            <label htmlFor='startInd'>Showing:</label>
-                            <input className='form-control ml-1' type='number' value={startInd} id='startInd' onChange={(e) => {
-                                setStartInd(e.target.value)
-                            }}/>
-                        </div>
-                        <div className='col-5 d-flex'>
-                            <label htmlFor='endInd'>To:</label>
-                            <input className='form-control ml-1' type='number' value={endInd} id='endInd' onChange={(e) => {
-                                setEndInd(e.target.value)
-                            }}/>
-                        </div>
-                        <div className='col-2'>
-                            <button className='btn btn-light form-control' type='submit'>SUBMIT</button>
-                        </div>
-                    </div>
-                </form>
+                <nav className='navbar navbar-expand-sm navbar-dark bg-dark'>
+                <a class="navbar-brand" href="#">Range:</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form className='form-inline mt-3 ml-auto' onSubmit={(e) => {
+                        handleSubmit(e);
+                    }}>
+                        <input className='form-control mr-xs-1' type='number' value={startInd} id='startInd' onChange={(e) => {
+                            setStartInd(e.target.value)
+                        }}/>
+                        <input className='form-control mr-xs-1' type='number' value={endInd} id='endInd' onChange={(e) => {
+                            setEndInd(e.target.value)
+                        }}/>
+                        <button className='btn btn-outline-light' type='submit'>SUBMIT</button>
+                    </form>
+                </div>
+                    
+                </nav>
             </div>
             {console.log('I reloaded }{')}
             {console.log('======================')}
