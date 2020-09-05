@@ -1,24 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useRoutes } from 'hookrouter';
+import routes from './components/routes';
 import './App.css';
 
 function App() {
+
+  const routeResult = useRoutes(routes);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App container-fluid">
+      <div className='row'>
+        <h1 className='col-6 display-4'>Poke TeamBuilder</h1>
+      </div>
+      {routeResult}
     </div>
   );
 }
