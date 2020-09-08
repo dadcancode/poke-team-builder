@@ -21,6 +21,8 @@ const Pokedex = () => {
             })
     }
 
+    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // let temp = [startInd, endInd]
@@ -39,7 +41,7 @@ const Pokedex = () => {
     return (
         <div className='row bg-dark'>
             <div className='col-12 mb-3'>
-                <nav className='navbar navbar-expand-sm navbar-dark bg-dark'>
+                <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
                 <a class="navbar-brand" href="#">Range:</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -60,10 +62,7 @@ const Pokedex = () => {
                     
                 </nav>
             </div>
-            {console.log('I reloaded }{')}
-            {console.log('======================')}
-            {console.log('html pokedex:')}
-            {console.log(pokedex)}
+            {/* <button onClick={() => {navigate('/', {a: 'hello'})}}></button> */}
             {pokedex.map((val, ind) => {
                 console.log(`mapping (${ind})index...`)
                 console.log(`---[ val is : ${JSON.stringify(val)}`);

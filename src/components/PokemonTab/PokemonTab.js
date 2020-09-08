@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
+import { A, navigate } from 'hookrouter';
+import './PokemonTab.css';
 
 const PokemonTab = (props) => {
     console.log('PokemonTab ran');
     console.log(props.url)
     const [ tabInfo, setTabInfo ] = useState({});
+
+    
 
     const getTabInfo = (url) => {
         fetch(url)
@@ -16,30 +20,44 @@ const PokemonTab = (props) => {
         })
     }
 
+    const viewPokemon = () => {
+        navigate(`/pokemonView/${tabInfo.id}`)
+    }
+
     useEffect(() => {
         getTabInfo(props.url);
     }, [props]);
 
     return (
-        <div className='col-sm-3'>
-            <div className='card bg-light text-secondary my-2'>
+        <div className='col-md-4 col-lg-3 d-flex justify-content-center'>
+            <div className='card w-100 bg-light text-secondary pokedex-card text-decoration-none' onClick={() => {
+                viewPokemon();
+            }}>
                 <div className='card-body'>
-                    <div className='d-flex'>
-                        {tabInfo.sprites && <img src={tabInfo.sprites.front_default}/>}
-                        {/* {console.log(typeof(tabInfo.sprites))} */}
-                        <h6 className='card-title h4'>{tabInfo.name}</h6>
-                        <span className='ml-3'>{tabInfo.id}</span>
-                        {/* {console.log(tabInfo.species.name)} */}
+                    <div className='row no-gutters'>
+                        <div className='col-11 col-md-10'>
+                            <div className='row no-gutters'>
+                                <div className='col-4 col-md-12 d-flex justify-content-center'>
+                                    <img src={tabInfo.sprites ? tabInfo.sprites.front_default : ''}/>
+                                </div>
+                                <div className='col-8 col-md-12 d-flex justify-content-center'>
+                                    <h6 className='card-title pokedex-name'>{tabInfo.name}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-1 col-md-2 d-flex justify-content-end'>
+                            <span className='pokedex-id'>{tabInfo.id}</span>
+                        </div>
                     </div>
-                    <div className='d-flex'>
+                    <div className='row no-gutters'>
                         {tabInfo.types ? tabInfo.types.map((val, ind) => {
                             if(ind === 0) {
                                 return (
-                                    <p className='lead mr-1'>{`${val.type.name}`}</p>
+                                    <p className='lead h-100 mr-1'>{`${val.type.name}`}</p>
                                 )
                             } else {
                                 return (
-                                    <p className='lead'>{`/ ${val.type.name}`}</p>
+                                    <p className='lead h-100'>{`/ ${val.type.name}`}</p>
                                 )
                             }
                         }) : ''}
