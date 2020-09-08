@@ -5,8 +5,8 @@ import PokemonTab from '../PokemonTab/PokemonTab';
 const Pokedex = () => {
 
     const [ pokedex, setPokedex ] = useState([]);
-    const [ startInd, setStartInd ] = useState(10);
-    const [ endInd, setEndInd ] = useState(20);
+    const [ startInd, setStartInd ] = useState(1);
+    const [ endInd, setEndInd ] = useState(10);
     const [ pInd, setPind ] = useState([startInd, endInd])
 
     const getPokedex = (start, end) => {

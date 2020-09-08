@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQueryParams } from 'hookrouter';
+import { TeamContext } from '../TeamContext';
 
 const PokemonView = (props) => {
 
     const [ viewedPokemon, setViewedPokemon ] = useState({});
+
+    const [team, setTeam] = useContext(TeamContext);
 
 
     useEffect(() => {
@@ -18,9 +21,15 @@ const PokemonView = (props) => {
         })
     }
 
+    const addToTeam = () => {
+        if(team.length < 7) {
+            setTeam([...team, props.id])
+        }
+    }
+
 
     return (
-        <div className='row'>
+        <div className='row no-gutters'>
             <div className='col-12'>
                 <div className='row no-gutters'>
                     <div className='col-10'>
@@ -35,7 +44,12 @@ const PokemonView = (props) => {
                 <img className='img-fluid' src={viewedPokemon.sprites ? viewedPokemon.sprites.other['official-artwork'].front_default : ''}/>
             </div>
             <div className='col-12'>
-                <div className='row'>
+                <button onClick={() => {
+                    addToTeam()
+                }} className='btn btn-outline-primary w-100'>Add To Team</button>
+            </div>
+            <div className='col-12'>
+                <div className='row no-gutters'>
                     <div className='col-12'>
                         Types:
                     </div>
