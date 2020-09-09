@@ -21,7 +21,7 @@ const PokemonTab = (props) => {
     }
 
     const viewPokemon = () => {
-        navigate(`/pokemonView/${tabInfo.id}`)
+        navigate(`/pokemonView/${tabInfo.id}`);
     }
 
     useEffect(() => {
