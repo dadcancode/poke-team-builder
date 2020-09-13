@@ -64,8 +64,6 @@ const Pokedex = () => {
             </div>
             {/* <button onClick={() => {navigate('/', {a: 'hello'})}}></button> */}
             {pokedex.map((val, ind) => {
-                console.log(`mapping (${ind})index...`)
-                console.log(`---[ val is : ${JSON.stringify(val)}`);
                 return (
                     <PokemonTab url={val.url} />
                 )

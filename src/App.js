@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRoutes, A, navigate } from 'hookrouter';
+import { useRoutes, navigate } from 'hookrouter';
 import routes from './components/routes';
 // import Menu from './components/Menu/Menu';
 // import Pokedex from './components/Pokedex/Pokedex';

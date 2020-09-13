@@ -3,8 +3,7 @@ import { A, navigate } from 'hookrouter';
 import './PokemonTab.css';
 
 const PokemonTab = (props) => {
-    console.log('PokemonTab ran');
-    console.log(props.url)
+    
     const [ tabInfo, setTabInfo ] = useState({});
 
     
@@ -13,9 +12,6 @@ const PokemonTab = (props) => {
         fetch(url)
         .then(resp => resp.json())
         .then(json => {
-            console.log('tabInfo:');
-            console.log(json);
-            console.log('======================');
             setTabInfo(json)
         })
     }
