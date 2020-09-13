@@ -12,7 +12,6 @@ const Team = () => {
 
     useEffect( () => {
         if(team.length) {
-            let temp = [];
             team.map(async (val) => {
                 let newTypeInfo = await getTypeInfoByPokeID(val);
                 console.log(`newTypeInfo: ${JSON.stringify(newTypeInfo)}`);

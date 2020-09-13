@@ -27,14 +27,22 @@ const getTypeInfoByPokeID = async (id) => {
         name: p.name,
         typeData: []
     };
-    p.types.map( async (val, ind) => {
+    p.types.map( async (val) => {
         let data = await fetch(val.type.url).then(resp => resp.json()).then(json => {return json});
         // console.log(`${ind} data for type info is: ${JSON.stringify(data)}`)
-        typeObj.typeData.push(data);
-    })
+        typeObj.typeData.push(objectifyTypeData(data));
+    });
     console.log(`typeObj before return: ${JSON.stringify(typeObj)}`)
     return typeObj;
 
+}
+
+const objectifyTypeData = (data) => {
+    let newTypeObj = {
+        type: data.name,
+        damage: data.damage_relations
+    }
+    return newTypeObj;
 }
 
 export { getPokeByID, getPokedex, getTypeInfoByPokeID };
