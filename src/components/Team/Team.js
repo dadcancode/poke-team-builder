@@ -3,24 +3,38 @@ import PokemonTab from '../PokemonTab/PokemonTab';
 import { TeamContext } from '../TeamContext';
 // import {getPokedex} from 'C:/Users/Zach/Desktop/Dev Projex/poke-team-builder/src/services/Poke.js';
 import {getTypeInfoByPokeID} from '../../services/Poke';
+import {getTeamStats} from '../../services/Analyze';
 
 const Team = () => {
 
     const [team, setTeam] = useContext(TeamContext);
 
     const [typeInfo, setTypeInfo] = useState([]);
+    const [teamStats, setTeamStats] = useState({})
 
     useEffect( () => {
-        if(team.length) {
+        if(team.length > 0) {
             team.map(async (val) => {
                 let newTypeInfo = await getTypeInfoByPokeID(val);
-                console.log(`newTypeInfo: ${JSON.stringify(newTypeInfo)}`);
+                // console.log(`newTypeInfo: ${JSON.stringify(newTypeInfo)}`);
                 setTypeInfo(typeInfo => [...typeInfo, newTypeInfo]);
                 // console.log(`temp inside map after push: ${JSON.stringify(temp)}`);
             })
             // console.log(`temp after map: ${JSON.stringify(temp)}`);
         }
-    }, []);
+    }, [team]);
+
+    useEffect(() => {
+        console.log(`typeInfo: ${JSON.stringify(typeInfo)}`)
+        if(typeInfo.length > 0) {
+            let teamS = getTeamStats(typeInfo);
+            console.log(teamS)
+        }
+    }, [typeInfo])
+
+    useEffect(() => {
+        console.log('useEffect ran because typeInfo updated')
+    }, [typeInfo])
 
     return (
         <div className='row'>

@@ -31,8 +31,7 @@ const getTypeInfoByPokeID = async (id) => {
         let data = await fetch(val.type.url).then(resp => resp.json()).then(json => {return json});
         // console.log(`${ind} data for type info is: ${JSON.stringify(data)}`)
         typeObj.typeData.push(objectifyTypeData(data));
-    });
-    console.log(`typeObj before return: ${JSON.stringify(typeObj)}`)
+    })
     return typeObj;
 
 }
