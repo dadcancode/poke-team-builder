@@ -4,6 +4,7 @@ import { TeamContext } from '../TeamContext';
 // import {getPokedex} from 'C:/Users/Zach/Desktop/Dev Projex/poke-team-builder/src/services/Poke.js';
 import {getTypeInfoByPokeID} from '../../services/Poke';
 import {getTeamStats} from '../../services/Analyze';
+import { log } from '../../services/Config';
 
 const Team = () => {
 
@@ -20,21 +21,20 @@ const Team = () => {
                 setTypeInfo(typeInfo => [...typeInfo, newTypeInfo]);
                 // console.log(`temp inside map after push: ${JSON.stringify(temp)}`);
             })
+            
             // console.log(`temp after map: ${JSON.stringify(temp)}`);
         }
-    }, [team]);
+        // console.log('team change')
+    }, []);
 
     useEffect(() => {
-        console.log(`typeInfo: ${JSON.stringify(typeInfo)}`)
-        if(typeInfo.length > 0) {
-            let teamS = getTeamStats(typeInfo);
-            console.log(teamS)
-        }
-    }, [typeInfo])
-
-    useEffect(() => {
-        console.log('useEffect ran because typeInfo updated')
-    }, [typeInfo])
+        // console.log(`typeInfo update: `)
+        // console.log(typeInfo);
+        let stats = getTeamStats(typeInfo);
+        // console.log('stats');
+        // console.log(stats);
+        log('stats', stats);
+    }, [typeInfo]);
 
     return (
         <div className='row'>

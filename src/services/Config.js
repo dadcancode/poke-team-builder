@@ -6,3 +6,9 @@ const ENDPOINTS = {
 }
 
 export { API_URL, ENDPOINTS};
+
+export const log = (name, dataToLog) => {
+    console.log(`${name} is:`);
+    console.log(dataToLog);
+    console.log('===========================');
+}

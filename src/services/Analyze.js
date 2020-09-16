@@ -1,3 +1,7 @@
+import { log } from "./Config";
+
+
+
 const objectifyArray = (arr) => {
     let objectified = {};
     if(arr.length > 0) {
@@ -10,7 +14,7 @@ const objectifyArray = (arr) => {
 
 const getDmgData = (dmgObj, damageType) => {
     console.log('getDmgData ran');
-    console.log(`dmgData dmgObj: ${JSON.stringify(dmgObj)}, damageType: ${damageType}`);
+    log('dmgObj', dmgObj);
     let dmg = {};
     if(dmgObj[damageType].length > 0) {
         dmg = {...objectifyArray(dmgObj[damageType])};    
@@ -35,34 +39,51 @@ const getWeaknesses = (typeDataArr) => {
 
 const getStrengths = (typeDataArr) => {
     console.log('getStrengths ran');
-    console.log(`getStrengths typeDataArr: ${JSON.stringify(typeDataArr)}`);
+    log('typeDataArr', typeDataArr);
+    log('typeDataArr[0]', typeDataArr[0])
+    // log('typeof(typeDataArr)', typeof(typeDataArr));
+    let temp = [...typeDataArr];
+    log('temp', temp);
     let strongTypes = {
         noDmgFrom: {},
         doubleDmgTo: {},
         halfDmgFrom: {}
     }
     typeDataArr.map((val) => {
+        console.log('getStrengths is mapping')
+        console.log(val)
         strongTypes.noDmgFrom = {...getDmgData(val.damage, 'no_damage_from')};
         strongTypes.doubleDmgTo = {...getDmgData(val.damage, 'double_damage_to')};
         strongTypes.halfDmgFrom = {...getDmgData(val.damage, 'half_damage_from')};        
     });
 
     return strongTypes;
+
+
 }
 
 const getTeamStats = (teamArr) => {
     console.log('getTeamStats ran');
-    console.log(`teamArr: ${JSON.stringify(teamArr)}`)
+    log('teamArr', teamArr);
+    log('teamArr.lenght', teamArr.length);
     let teamStats = {
         strongTypes: {},
         weakTypes: {}
     };
-    if(teamArr.length > 0) {
-        console.log('teamArr.length is > 0')
-        teamArr.map((val) => {
-            console.log(`val.typeData: ${JSON.stringify(val.typeData)}`);
+    let temp = [...teamArr];
+    log('getTeamStats temp', temp)
+    if(temp.length > 0) {
+        log('temp[0].tyepData', temp[0].typeData)
+        let myTemp = getStrengths(temp[0].typeData);
+        log('myTemp', myTemp)
+        temp.map((val) => {
+            log('getTeamStats map val', val);
+            log('val.typeData', val.typeData);
+            // log('Object.entries(val.typeData)', Object.entries(val.typeData));
+            // log('getTeamStats map typeof(val.typeData)', typeof(val.typeData));
+            log('val.typeData.length', val.typeData.length);
             let strongTemp = getStrengths(val.typeData);
-            console.log(strongTemp);
+            log('strongTemp', strongTemp);
         });
     }
 
