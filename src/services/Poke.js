@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_URL, ENDPOINTS } from '../services/Config';
+import { API_URL, ENDPOINTS, log } from '../services/Config';
 
 // return an array of pokemon based on index
 
@@ -23,25 +23,15 @@ const getPokeByID = async (id) => {
 
 const getTypeInfoByPokeID = async (id) => {
     let p = await getPokeByID(id);
-    let typeObj = {
-        name: p.name,
-        typeData: []
-    };
+    let typeObj = {};
     p.types.map( async (val) => {
         let data = await fetch(val.type.url).then(resp => resp.json()).then(json => {return json});
+        log('data', data);
         // console.log(`${ind} data for type info is: ${JSON.stringify(data)}`)
-        typeObj.typeData.push(objectifyTypeData(data));
+        typeObj = {...data.damage_relations};
     })
     return typeObj;
 
-}
-
-const objectifyTypeData = (data) => {
-    let newTypeObj = {
-        type: data.name,
-        damage: data.damage_relations
-    }
-    return newTypeObj;
 }
 
 export { getPokeByID, getPokedex, getTypeInfoByPokeID };

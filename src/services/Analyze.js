@@ -37,19 +37,18 @@ const getWeaknesses = (typeDataArr) => {
     return weakTypes;
 }
 
-const getStrengths = (typeDataArr) => {
+const getStrengths = async (typeDataArr) => {
     console.log('getStrengths ran');
     log('typeDataArr', typeDataArr);
-    log('typeDataArr[0]', typeDataArr[0])
+    log('typeDataArr[0]', typeDataArr[0]);
+    log('typeDataArr.length', typeDataArr.length);
     // log('typeof(typeDataArr)', typeof(typeDataArr));
-    let temp = [...typeDataArr];
-    log('temp', temp);
     let strongTypes = {
         noDmgFrom: {},
         doubleDmgTo: {},
         halfDmgFrom: {}
     }
-    typeDataArr.map((val) => {
+    await typeDataArr.map((val) => {
         console.log('getStrengths is mapping')
         console.log(val)
         strongTypes.noDmgFrom = {...getDmgData(val.damage, 'no_damage_from')};
@@ -62,27 +61,25 @@ const getStrengths = (typeDataArr) => {
 
 }
 
-const getTeamStats = (teamArr) => {
+const getTeamStats = async (teamArr) => {
     console.log('getTeamStats ran');
     log('teamArr', teamArr);
-    log('teamArr.lenght', teamArr.length);
     let teamStats = {
         strongTypes: {},
         weakTypes: {}
     };
-    let temp = [...teamArr];
-    log('getTeamStats temp', temp)
-    if(temp.length > 0) {
-        log('temp[0].tyepData', temp[0].typeData)
-        let myTemp = getStrengths(temp[0].typeData);
-        log('myTemp', myTemp)
-        temp.map((val) => {
+
+    if(teamArr.length > 0) {
+
+        await teamArr.map(async (val) => {
+            let dataArr = await val.typeData;
             log('getTeamStats map val', val);
             log('val.typeData', val.typeData);
             // log('Object.entries(val.typeData)', Object.entries(val.typeData));
             // log('getTeamStats map typeof(val.typeData)', typeof(val.typeData));
             log('val.typeData.length', val.typeData.length);
-            let strongTemp = getStrengths(val.typeData);
+            log('dataArr', dataArr);
+            let strongTemp = getStrengths(dataArr);
             log('strongTemp', strongTemp);
         });
     }

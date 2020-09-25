@@ -20,7 +20,7 @@ const Team = () => {
                 // console.log(`newTypeInfo: ${JSON.stringify(newTypeInfo)}`);
                 setTypeInfo(typeInfo => [...typeInfo, newTypeInfo]);
                 // console.log(`temp inside map after push: ${JSON.stringify(temp)}`);
-            })
+            });
             
             // console.log(`temp after map: ${JSON.stringify(temp)}`);
         }
@@ -28,12 +28,9 @@ const Team = () => {
     }, []);
 
     useEffect(() => {
-        // console.log(`typeInfo update: `)
-        // console.log(typeInfo);
-        let stats = getTeamStats(typeInfo);
-        // console.log('stats');
-        // console.log(stats);
-        log('stats', stats);
+        if(typeInfo.length > 0) {
+            
+        }
     }, [typeInfo]);
 
     return (
