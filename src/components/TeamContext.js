@@ -4,7 +4,7 @@ const TeamContext = createContext([[], () => []]);
 
 const TeamProvider = (props) => {
 
-    const [team, setTeam] = useState(['1', '2']);
+    const [team, setTeam] = useState(['1', '8']);
 
     return (
         <TeamContext.Provider value={[team, setTeam]}>

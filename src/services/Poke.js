@@ -21,15 +21,30 @@ const getPokeByID = async (id) => {
         })
 }
 
+const getTypeInfoByURL = async (url) => {
+    return fetch(url)
+        .then(resp => resp.json())
+        .then(json => { 
+            return json.damage_relations; 
+        })
+}
+
 const getTypeInfoByPokeID = async (id) => {
     let p = await getPokeByID(id);
     let typeObj = {};
-    p.types.map( async (val) => {
-        let data = await fetch(val.type.url).then(resp => resp.json()).then(json => {return json});
-        log('data', data);
-        // console.log(`${ind} data for type info is: ${JSON.stringify(data)}`)
-        typeObj = {...data.damage_relations};
-    })
+    let temp = await Promise.all(
+        p.types.map( async (val) => {
+                let data = await getTypeInfoByURL(val.type.url);
+                log('data', data);
+                // console.log(`${ind} data for type info is: ${JSON.stringify(data)}`)
+                typeObj = { ...data };
+                log('typeObj inside map', typeObj);
+            })
+    )
+
+    log('DA TEMP', temp);
+
+    log('typeObj outside of map, before return', typeObj);
     return typeObj;
 
 }

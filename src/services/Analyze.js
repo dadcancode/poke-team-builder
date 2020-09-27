@@ -3,12 +3,15 @@ import { log } from "./Config";
 
 
 const objectifyArray = (arr) => {
+    log('objectify ran', null);
+    log('arr', arr)
     let objectified = {};
     if(arr.length > 0) {
-        arr.map((val, ind) => {
-            objectified[val] = ind;
+        arr.map((val) => {
+            objectified[val.name] = val.name;
         });
     }
+    log('objectified', objectified)
     return objectified;
 }
 
@@ -37,26 +40,16 @@ const getWeaknesses = (typeDataArr) => {
     return weakTypes;
 }
 
-const getStrengths = async (typeDataArr) => {
-    console.log('getStrengths ran');
-    log('typeDataArr', typeDataArr);
-    log('typeDataArr[0]', typeDataArr[0]);
-    log('typeDataArr.length', typeDataArr.length);
-    // log('typeof(typeDataArr)', typeof(typeDataArr));
-    let strongTypes = {
-        noDmgFrom: {},
-        doubleDmgTo: {},
-        halfDmgFrom: {}
-    }
-    await typeDataArr.map((val) => {
-        console.log('getStrengths is mapping')
-        console.log(val)
-        strongTypes.noDmgFrom = {...getDmgData(val.damage, 'no_damage_from')};
-        strongTypes.doubleDmgTo = {...getDmgData(val.damage, 'double_damage_to')};
-        strongTypes.halfDmgFrom = {...getDmgData(val.damage, 'half_damage_from')};        
-    });
+const getStrengths = (damageRelations) => {
+    // console.log('getStrengths ran');
+    // // log('typeof(typeDataArr)', typeof(typeDataArr));
+    // let strongTypes = {
+    //     noDmgFrom: ,
+    //     doubleDmgTo: {...getDmgData(damageRelations, 'double_damage_to')},
+    //     halfDmgFrom: {...getDmgData(damageRelations, 'half_damage_from')}
+    // }
 
-    return strongTypes;
+    // return strongTypes;
 
 
 }
@@ -64,26 +57,52 @@ const getStrengths = async (typeDataArr) => {
 const getTeamStats = async (teamArr) => {
     console.log('getTeamStats ran');
     log('teamArr', teamArr);
+
     let teamStats = {
-        strongTypes: {},
+        strongTypes: {
+            noDmgFrom: {},
+            doubleDmgTo: {},
+            halfDmgFrom: {}
+        },
         weakTypes: {}
     };
 
-    if(teamArr.length > 0) {
-
-        await teamArr.map(async (val) => {
-            let dataArr = await val.typeData;
+    let temp = await Promise.all(
+        teamArr.map((val) => {
             log('getTeamStats map val', val);
-            log('val.typeData', val.typeData);
-            // log('Object.entries(val.typeData)', Object.entries(val.typeData));
-            // log('getTeamStats map typeof(val.typeData)', typeof(val.typeData));
-            log('val.typeData.length', val.typeData.length);
-            log('dataArr', dataArr);
-            let strongTemp = getStrengths(dataArr);
-            log('strongTemp', strongTemp);
-        });
-    }
+            teamStats.strongTypes.noDmgFrom = {
+                ...getDmgData(val, 'no_damage_from'),
+                ...teamStats.strongTypes.noDmgFrom
+            }
+            teamStats.strongTypes.doubleDmgTo = {
+                ...getDmgData(val, 'double_damage_to'),
+                ...teamStats.strongTypes.doubleDmgTo
+            }
+            teamStats.strongTypes.halfDmgFrom = {
+                ...getDmgData(val, 'half_damage_from'),
+                ...teamStats.strongTypes.halfDmgFrom
+            }
+            teamStats.weakTypes.noDmgTo = {
+                ...getDmgData(val, 'no_damage_to'),
+                ...teamStats.weakTypes.noDmgTo
+            }
+            teamStats.weakTypes.doubleDmgFrom = {
+                ...getDmgData(val, 'double_damage_from'),
+                ...teamStats.weakTypes.doubleDmgFrom
+            }
+            teamStats.weakTypes.halfDmgTo = {
+                ...getDmgData(val, 'half_damage_to'),
+                ...teamStats.weakTypes.halfDmgTo
+            }
+            log('teamStats', teamStats);
+        })
 
+    )
+
+    
+    log('teamStats before return', teamStats);
+    log('teamStats.strongTypes.doubleDmgTo', teamStats.strongTypes.doubleDmgTo);
+    log('object.entries(teamStats)', Object.entries(teamStats))
     return teamStats;
 }
 

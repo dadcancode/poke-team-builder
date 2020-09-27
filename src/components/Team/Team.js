@@ -17,7 +17,7 @@ const Team = () => {
         if(team.length > 0) {
             team.map(async (val) => {
                 let newTypeInfo = await getTypeInfoByPokeID(val);
-                // console.log(`newTypeInfo: ${JSON.stringify(newTypeInfo)}`);
+                log('newTypeInfo', newTypeInfo);
                 setTypeInfo(typeInfo => [...typeInfo, newTypeInfo]);
                 // console.log(`temp inside map after push: ${JSON.stringify(temp)}`);
             });
@@ -28,9 +28,15 @@ const Team = () => {
     }, []);
 
     useEffect(() => {
-        if(typeInfo.length > 0) {
-            
+        const fetchTeamStats = async (arr) => {
+            let teamStatsNew = await getTeamStats(arr);
+            log('teamStatsNew', teamStatsNew);
+            setTeamStats(teamStatsNew);
         }
+        if(typeInfo.length > 0) {
+            fetchTeamStats(typeInfo);
+        }
+        
     }, [typeInfo]);
 
     return (
