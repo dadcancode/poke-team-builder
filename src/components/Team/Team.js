@@ -3,7 +3,7 @@ import PokemonTab from '../PokemonTab/PokemonTab';
 import { TeamContext } from '../TeamContext';
 // import {getPokedex} from 'C:/Users/Zach/Desktop/Dev Projex/poke-team-builder/src/services/Poke.js';
 import {getTypeInfoByPokeID} from '../../services/Poke';
-import {getTeamStats} from '../../services/Analyze';
+import {analyzeTeamStats, getTeamStats} from '../../services/Analyze';
 import { log } from '../../services/Config';
 
 const Team = () => {
@@ -11,7 +11,8 @@ const Team = () => {
     const [team, setTeam] = useContext(TeamContext);
 
     const [typeInfo, setTypeInfo] = useState([]);
-    const [teamStats, setTeamStats] = useState({})
+    const [teamStats, setTeamStats] = useState({});
+    const [teamWeakness, setTeamWeakness] = useState([]);
 
     useEffect( () => {
         if(team.length > 0) {
@@ -38,6 +39,13 @@ const Team = () => {
         }
         
     }, [typeInfo]);
+
+    useEffect(() => {
+        if(Object.keys(teamStats).length) {
+            let temp = analyzeTeamStats(teamStats);
+            setTeamWeakness([...temp]);
+        }
+    }, [teamStats]);
 
     return (
         <div className='row'>

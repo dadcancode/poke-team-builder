@@ -106,4 +106,16 @@ const getTeamStats = async (teamArr) => {
     return teamStats;
 }
 
-export { getStrengths, getWeaknesses, getTeamStats };
+const analyzeTeamStats = (teamStats) => {
+    let teamWeakness = [];
+    let weakArr = [...Object.keys(teamStats.weakTypes.noDmgTo), ...Object.keys(teamStats.weakTypes.doubleDmgFrom)];
+    for(let i = 0; i < weakArr.length; i++) {
+        if(!teamStats.strongTypes.noDmgFrom[weakArr[i]] || !teamStats.strongTypes.doubleDmgTo[weakArr[i]]) {
+            teamWeakness.push(weakArr[i]);
+        }
+    }
+    
+    return teamWeakness;
+}
+
+export { getStrengths, getWeaknesses, getTeamStats, analyzeTeamStats };
