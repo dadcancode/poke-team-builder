@@ -5,6 +5,7 @@ import { TeamContext } from '../TeamContext';
 import {getTypeInfoByPokeID} from '../../services/Poke';
 import {analyzeTeamStats, getTeamStats} from '../../services/Analyze';
 import { log } from '../../services/Config';
+import TypeTab from '../TypeTab/TypeTab';
 
 const Team = () => {
 
@@ -63,7 +64,12 @@ const Team = () => {
                     })}
                 </div>
             </div>
-            
+            <div className='col-12'>
+                {
+                    teamWeakness.length ?
+                        teamWeakness
+                }
+            </div>            
         </div>
     )
 }
